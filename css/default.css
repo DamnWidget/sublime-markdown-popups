@@ -1,15 +1,24 @@
 /*Style with current theme.*/
-{%- if var.sublime_version < 3119 %}
+{{'Packages/mdpopups/css/base.css'|getcss}}
+{%- if var.default_style %}
+{%- if var.sublime_version < 3124 %}
 {{'Packages/mdpopups/css/default-legacy.css'|getcss}}
 {%- else %}
-.mdpopups hr { {{'.foreground'|css('color')|background}} }
+.mdpopups hr { background-color: {{'.foreground'|property('color')}} }
+.mdpopups kbd {
+  background-color: {{'.foreground'|property('color')}};
+  color: {{'.background'|property('background-color')}};
+}
 {%- if var.use_pygments %}
   {%- if var.is_light %}
 {{'default'|pygments}}
   {%- else %}
 {{'native'|pygments}}
-  {% endif %}
+  {%- endif %}
 {%- else %}
-.mdpopups .highlight, .mdpopups .inline-highlight { {{'.background'|css|brightness(0.985)}} }
+.mdpopups .highlight, .mdpopups .inline-highlight {
+  background-color: color({{'.background'|property('background-color')}} blend(black 98%));
+}
+{%- endif %}
 {%- endif %}
 {%- endif %}
